@@ -36,13 +36,13 @@ public class BullsAndCowsServiceImpl implements BullsAndCowsService {
   }
 
   String generateNumber() {
-    var random = new Random();
     var used = new HashSet<>();
     var buff = new StringBuilder();
     for (int i = 0; i < 4; i++) {
       int digit;
       while (true) {
-        digit = random.nextInt(0, 10);
+        digit = nextRandomDigit();
+        if (i == 0 && digit == 0) continue;
         if (used.contains(digit)) continue;
         used.add(digit);
         break;
@@ -52,6 +52,11 @@ public class BullsAndCowsServiceImpl implements BullsAndCowsService {
     }
 
     return buff.toString();
+  }
+
+  int nextRandomDigit() {
+    var random = new Random();
+    return random.nextInt(10);
   }
 
   Guess checkGuess(String chosen, String guessed) {

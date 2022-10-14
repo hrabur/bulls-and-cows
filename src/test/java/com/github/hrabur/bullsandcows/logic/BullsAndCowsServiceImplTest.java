@@ -4,12 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import com.github.hrabur.bullsandcows.repo.Game;
+import com.github.hrabur.bullsandcows.repo.GameRepo;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 public class BullsAndCowsServiceImplTest {
 
@@ -43,12 +51,40 @@ public class BullsAndCowsServiceImplTest {
 
   @Test
   void testGenerateNummber() {
-    fail("TODO");
+    var bullsAndCowsService = new BullsAndCowsServiceImpl(null);
+    var bullsAndCowsServiceSpy = Mockito.spy(bullsAndCowsService);
+    when(bullsAndCowsServiceSpy.nextRandomDigit())
+        .thenReturn(0)
+        .thenReturn(1)
+        .thenReturn(2)
+        .thenReturn(2)
+        .thenReturn(3)
+        .thenReturn(4);
+    var result = bullsAndCowsServiceSpy.generateNumber();
+    assertThat(result).isEqualTo("1234");
+    verify(bullsAndCowsServiceSpy, times(6)).nextRandomDigit();
   }
 
   @Test
   void testStartNewGame() {
-    fail("TODO");
+    var gameRepoMock = mock(GameRepo.class);
+    when(gameRepoMock.save(any()))
+        .then(
+            invocation -> {
+              var game = invocation.getArgument(0, Game.class);
+              game.setId(123456l);
+              return game;
+            });
+    var bullsAndCowsService = new BullsAndCowsServiceImpl(gameRepoMock);
+    var bullsAndCowsServiceSpy = Mockito.spy(bullsAndCowsService);
+    when(bullsAndCowsServiceSpy.generateNumber()).thenReturn("1234");
+
+    var game = bullsAndCowsServiceSpy.startNewGame();
+    assertThat(game).isNotNull();
+    assertThat(game.getId()).isEqualTo(123456l);
+    assertThat(game.getChosenNumber()).isEqualTo("1234");
+    assertThat(game.getGuess()).isEmpty();
+    verify(gameRepoMock).save(any());
   }
 
   @Test

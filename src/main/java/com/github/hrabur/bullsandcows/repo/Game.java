@@ -16,7 +16,7 @@ public class Game {
   @Id
   @GeneratedValue
   @Column(name = "game_id")
-  private String id;
+  private Long id;
 
   private String chosenNumber;
 
@@ -30,11 +30,11 @@ public class Game {
     this.chosenNumber = chosenNumber;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
