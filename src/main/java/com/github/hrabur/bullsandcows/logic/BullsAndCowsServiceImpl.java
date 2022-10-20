@@ -5,7 +5,11 @@ import com.github.hrabur.bullsandcows.repo.GameRepo;
 import com.github.hrabur.bullsandcows.repo.Guess;
 import java.util.HashSet;
 import java.util.Random;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
+@Transactional
 public class BullsAndCowsServiceImpl implements BullsAndCowsService {
 
   private GameRepo gameRepo;
@@ -24,12 +28,22 @@ public class BullsAndCowsServiceImpl implements BullsAndCowsService {
 
   @Override
   public Game getGameById(Long gameId) {
-    return gameRepo.findById(gameId).orElse(null);
+    var _game = gameRepo.findById(gameId);
+    if (_game.isEmpty()) {
+      throw new GameNotFoundException(gameId);
+    }
+
+    return _game.get();
   }
 
   @Override
   public Game makeGuess(Long gameId, String guessedNumber) {
-    var game = getGameById(gameId);
+    var _game = gameRepo.findById(gameId);
+    if (_game.isEmpty()) {
+      throw new GameNotFoundException(gameId);
+    }
+
+    var game = _game.get();
     var guess = checkGuess(game.getChosenNumber(), guessedNumber);
     game.getGuess().add(guess);
     return game;
