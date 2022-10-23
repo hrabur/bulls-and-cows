@@ -29,7 +29,7 @@ public class FirstSeleniumTest {
   }
 
   @Test
-  void searchInGoogleWithExplicitWait() {
+  void testGroupsDistributionPage() {
     driver.get("http://fmi-plovdiv.org");
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
