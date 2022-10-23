@@ -22,7 +22,7 @@ public class Game {
 
   @OrderColumn(name = "guess_id")
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Guess> guess = new ArrayList<>();
+  private List<Guess> guesses = new ArrayList<>();
 
   public Game() {}
 
@@ -46,11 +46,11 @@ public class Game {
     this.chosenNumber = chosenNumber;
   }
 
-  public List<Guess> getGuess() {
-    return guess;
+  public List<Guess> getGuesses() {
+    return guesses;
   }
 
-  public void setGuess(List<Guess> guess) {
-    this.guess = guess;
+  public void setGuesses(List<Guess> guesses) {
+    this.guesses = guesses;
   }
 }

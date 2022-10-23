@@ -38,14 +38,9 @@ public class BullsAndCowsServiceImpl implements BullsAndCowsService {
 
   @Override
   public Game makeGuess(Long gameId, String guessedNumber) {
-    var _game = gameRepo.findById(gameId);
-    if (_game.isEmpty()) {
-      throw new GameNotFoundException(gameId);
-    }
-
-    var game = _game.get();
+    var game = getGameById(gameId);
     var guess = checkGuess(game.getChosenNumber(), guessedNumber);
-    game.getGuess().add(guess);
+    game.getGuesses().add(guess);
     return game;
   }
 
