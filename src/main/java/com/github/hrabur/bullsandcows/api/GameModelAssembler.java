@@ -19,8 +19,8 @@ public class GameModelAssembler extends RepresentationModelAssemblerSupport<Game
   }
 
   @Override
-  public GameModel toModel(Game user) {
-    var gameModel = gameToGameModel.map(user);
+  public GameModel toModel(Game game) {
+    var gameModel = gameToGameModel.map(game);
     return gameModel.add(
         linkTo(methodOn(GameApi.class).getGame(gameModel.getId())).withSelfRel(),
         linkTo(methodOn(GameApi.class).makeGuess(gameModel.getId(), null)).withRel("makeGuess"),
