@@ -9,7 +9,7 @@ public class GameModel extends RepresentationModel<GameModel> {
 
   private Long id;
   private String chosenNumber;
-  private List<Guess> guess = new ArrayList<>();
+  private List<Guess> guesses = new ArrayList<>();
 
   public Long getId() {
     return id;
@@ -27,11 +27,11 @@ public class GameModel extends RepresentationModel<GameModel> {
     this.chosenNumber = chosenNumber;
   }
 
-  public List<Guess> getGuess() {
-    return guess;
+  public List<Guess> getGuesses() {
+    return guesses;
   }
 
-  public void setGuess(List<Guess> guess) {
-    this.guess = guess;
+  public void setGuesses(List<Guess> guesses) {
+    this.guesses = guesses;
   }
 }

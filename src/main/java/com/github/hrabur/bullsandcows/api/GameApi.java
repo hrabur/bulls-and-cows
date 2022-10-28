@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,7 +52,7 @@ public class GameApi {
   }
 
   @PostMapping(path = "/{gameId}/guesses", produces = APPLICATION_JSON_VALUE)
-  public GameModel makeGuess(@PathVariable Long gameId, String guessedNumber) {
+  public GameModel makeGuess(@PathVariable Long gameId, @RequestParam String guessedNumber) {
     var game = bullsAndCowsService.makeGuess(gameId, guessedNumber);
     return gameModelAssembler.toModel(game);
   }

@@ -14,6 +14,8 @@
 	<description>Bulls and Cows game in Spring Boot and ReactJS</description>
 	<properties>
 		<java.version>17</java.version>
+		<frontend-plugin.version>1.11.0</frontend-plugin.version>
+		<node.version>v16.13.1</node.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,6 +82,43 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-plugin.version}</version>
+				<configuration>
+					<nodeVersion>${node.version}</nodeVersion>
+					<installDirectory>target</installDirectory>
+					<workingDirectory>src/main/frontend</workingDirectory>
+					<environmentVariables>
+						<PUBLIC_URL>/dist</PUBLIC_URL>
+						<BUILD_PATH>${basedir}/src/main/webapp/dist</BUILD_PATH>
+					</environmentVariables>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>react-scripts build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
