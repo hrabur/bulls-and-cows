@@ -40,8 +40,11 @@ public class GameApi {
 
   @ResponseStatus(CREATED)
   @PostMapping(produces = APPLICATION_JSON_VALUE)
-  public GameModel startNewGame() {
-    var game = bullsAndCowsService.startNewGame();
+  public GameModel startNewGame(@RequestParam(required = false) String chosenNumber) {
+    var game =
+        (chosenNumber != null && chosenNumber.length() == 4)
+            ? bullsAndCowsService.startNewGame(chosenNumber)
+            : bullsAndCowsService.startNewGame();
     return gameModelAssembler.toModel(game);
   }
 

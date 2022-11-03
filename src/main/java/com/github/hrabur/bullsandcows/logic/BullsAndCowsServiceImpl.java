@@ -21,6 +21,11 @@ public class BullsAndCowsServiceImpl implements BullsAndCowsService {
   @Override
   public Game startNewGame() {
     var chosenNumber = generateNumber();
+    return startNewGame(chosenNumber);
+  }
+
+  @Override
+  public Game startNewGame(String chosenNumber) {
     var game = new Game(chosenNumber);
     gameRepo.save(game);
     return game;

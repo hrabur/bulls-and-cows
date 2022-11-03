@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import { useEffect, useState } from "react";
 import { Button, Stack, Table } from "react-bootstrap";
 import MaskedInput from "react-text-mask";
@@ -18,13 +19,17 @@ export default function BullsAndCowsGame() {
   const [game, setGame] = useState({ chosenNumber: "1234" });
   const [showChosenNumber, setShowChosenNumber] = useState(false);
   const [guessedNumber, setGuessedNumber] = useState();
+  // eslint-disable-next-line no-restricted-globals
+  const { chosenNumber } = queryString.parse(location.search);
 
   const startNewGame = async () => {
     const response = await fetch("/api/v1/games", {
       method: "POST",
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
+      body: `chosenNumber=${chosenNumber}`,
     });
     const body = await response.json();
     if (response.ok) setGame(body);

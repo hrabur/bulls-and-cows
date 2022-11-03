@@ -24,6 +24,6 @@ public class GameModelAssembler extends RepresentationModelAssemblerSupport<Game
     return gameModel.add(
         linkTo(methodOn(GameApi.class).getGame(gameModel.getId())).withSelfRel(),
         linkTo(methodOn(GameApi.class).makeGuess(gameModel.getId(), null)).withRel("makeGuess"),
-        linkTo(methodOn(GameApi.class).startNewGame()).withRel("newGame"));
+        linkTo(methodOn(GameApi.class).startNewGame(null)).withRel("newGame"));
   }
 }
